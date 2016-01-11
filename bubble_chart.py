@@ -87,6 +87,7 @@ def set_layout(title, x_title, y_title):
     )
     return layout
 
+
 def hover_over_text(fig, stats, top_sorted):
     counter = 0
     for industry, X in stats.groupby('industry'):
