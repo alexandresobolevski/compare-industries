@@ -1,7 +1,5 @@
 __author__ = 'Alexandre'
 
-py.sign_in('sobolevski.a', '1gd9i51p36')
-
 import pandas as pd
 import plotly.plotly as py
 import collections
@@ -61,7 +59,7 @@ def make_plotly_data(stats, top_sorted):
     return data
 
 
-def set_layout(x_title, y_title):
+def set_layout(title, x_title, y_title):
     axis_style = dict(
         zeroline=False,
         gridcolor='#FFFFFF',  # white
@@ -111,7 +109,11 @@ def add_data_source_note(fig):
         )]))
     return fig
 
-def main(filename):
+
+def make(filename):
+    py.sign_in('sobolevski.a', '1gd9i51p36')
+    # plot top 4 industries (selected by market cap), if more,
+    # add colors to colors_array
     top = 4
 
     stats = pd.read_csv(filename)
@@ -124,7 +126,7 @@ def main(filename):
 
     data = make_plotly_data(stats, top_sorted)
 
-    layout = set_layout(x_title, y_title)
+    layout = set_layout(title, x_title, y_title)
 
     fig = go.Figure(data=data, layout=layout)
 

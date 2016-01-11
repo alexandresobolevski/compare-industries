@@ -53,17 +53,3 @@ def get_key_stats(stock):
 
     except Exception,e :
         print 'failed in yahoo_key_stats ', str(e)
-
-
-def get_tickers_dict(filename):
-    tickers = {}
-    try:
-        f = open(filename,'r').read()
-        split_file = f.split('\n')
-        for line in split_file:
-            split_line = line.split(',')
-            tickers[split_line[0]] = {'name': split_line[1],'industry': split_line[2]}
-        return tickers
-
-    except Exception, e:
-        print 'failed in get_tickers_dict', str(e)

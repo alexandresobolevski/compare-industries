@@ -3,7 +3,7 @@ __author__ = 'Alexandre'
 
 import csv, time
 import bubble_chart
-from yahoo_api import get_tickers_dict, yahoo_key_stats
+from yahoo_api import get_key_stats
 
 
 def wait(seconds):
@@ -14,7 +14,7 @@ def write_stats(tickers, filename):
     print 'writing to file...'
     writer = csv.writer(open(filename, 'wb'))
     # write headers
-    writer.writerow(dict.keys()[0].keys())
+    writer.writerow(tickers[tickers.keys()[0]].keys())
     for ticker in tickers:
         writer.writerow(tickers[ticker].values())
 
@@ -23,7 +23,7 @@ def get_stats_for(tickers):
     for ticker in tickers.keys():
         print 'getting stats for ', ticker
         try:
-            names, stats = yahoo_key_stats(ticker)
+            names, stats = get_key_stats(ticker)
             wait(0.2) # being a good citizen
             for name, stat in zip(names,stats):
                 tickers[ticker][name] = stat
@@ -36,17 +36,30 @@ def get_stats_for(tickers):
     return tickers
 
 
+def get_tickers_dict(filename):
+    tickers = {}
+    try:
+        f = open(filename,'r').read()
+        split_file = f.split('\n')
+        for line in split_file:
+            split_line = line.split(',')
+            tickers[split_line[0]] = {'name': split_line[1],'industry': split_line[2]}
+        return tickers
+    except Exception, e:
+        print 'failed in get_tickers_dict', str(e)
+
+
 def main():
 
-    filename = 'sp500.txt'
+    filename = 'sp500'
 
-    tickers = get_tickers_dict(filename)
+    tickers = get_tickers_dict(filename + '.txt')
 
     tickers = get_stats_for(tickers)
 
-    write_stats(tickers, filename)
+    write_stats(tickers, filename + '.csv')
 
-    bubble_chart(filename)
+    bubble_chart.make(filename + '.csv')
 
 
 if __name__ == "__main__":
