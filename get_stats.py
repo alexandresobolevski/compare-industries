@@ -2,6 +2,7 @@ __author__ = 'Alexandre'
 
 
 import csv, time
+import bubble_chart
 from yahoo import get_tickers_dict, yahoo_key_stats
 
 
@@ -9,7 +10,7 @@ def wait(seconds):
     time.sleep(seconds)
 
 
-def write_stats(dict, filename):
+def write_stats(tickers, filename):
     print 'writing to file...'
     writer = csv.writer(open(filename, 'wb'))
     # write headers
@@ -44,6 +45,8 @@ def main():
     tickers = get_stats_for(tickers)
 
     write_stats(tickers, filename)
+
+    bubble_chart(filename)
 
 
 if __name__ == "__main__":
