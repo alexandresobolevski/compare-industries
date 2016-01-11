@@ -52,13 +52,13 @@ def yahoo_key_stats(stock):
         return ['mc', 'prm', 'roa' ], [mc, prm, roa]
 
     except Exception,e :
-        print 'failed in the main loop ', str(e)
+        print 'failed in yahoo_key_stats ', str(e)
 
 
-def get_tickers_dict():
+def get_tickers_dict(filename):
     tickers = {}
     try:
-        f = open('sp500.txt','r').read()
+        f = open(filename,'r').read()
         split_file = f.split('\n')
         for line in split_file:
             split_line = line.split(',')
@@ -66,4 +66,4 @@ def get_tickers_dict():
         return tickers
 
     except Exception, e:
-        print 'failed in retreiving sp500', str(e)
+        print 'failed in get_tickers_dict', str(e)
