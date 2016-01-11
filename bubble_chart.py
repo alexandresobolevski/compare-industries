@@ -3,6 +3,7 @@ __author__ = 'Alexandre'
 import pandas as pd
 import plotly.plotly as py
 import collections
+import json
 from plotly import graph_objs as go
 
 
@@ -111,7 +112,11 @@ def add_data_source_note(fig):
 
 
 def make(filename):
-    py.sign_in('sobolevski.a', '1gd9i51p36')
+    with open('credentials.json', 'r') as creds:
+        credentials = json.load(creds)
+
+    py.sign_in(credentials['plotly']['username'],
+               credentials['plotly']['key'])
     # plot top 4 industries (selected by market cap), if more,
     # add colors to colors_array
     top = 4
