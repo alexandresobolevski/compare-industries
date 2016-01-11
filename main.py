@@ -41,6 +41,15 @@ def wait(seconds):
     time.sleep(seconds)
 
 
+def write_stats(dict, filename):
+    print 'writing to file...'
+    writer = csv.writer(open(filename, 'wb'))
+    # write headers
+    writer.writerow(dict.keys()[0].keys())
+    for ticker in tickers:
+        writer.writerow(tickers[ticker].values())
+
+
 def get_stats_for(tickers):
     for ticker in tickers.keys():
         print 'getting stats for ', ticker
@@ -55,21 +64,17 @@ def get_stats_for(tickers):
             print 'failed to save to dict ', str(e)
     # example of tickers {'AGN':
     # {'prm': 88.4, 'roa': 1.7, 'name': 'Allergan plc','mc': 121710000000.0}
+    return tickers
 
-    print 'writing to file...'
-    writer = csv.writer(open(filename, 'wb'))
-    writer.writerow(tickers[ticker].keys())
-    for ticker in tickers:
-        writer.writerow(tickers[ticker].values())
 
 
 filename = 'sp500.txt'
 
 tickers = get_tickers_dict(filename)
 
-get_stats_for(tickers)
+tickers = get_stats_for(tickers)
 
-
+write_stats(tickers, filename)
 
 py.sign_in('sobolevski.a', '1gd9i51p36')
 
