@@ -55,7 +55,7 @@ def yahoo_key_stats(stock):
         print 'failed in the main loop ', str(e)
 
 
-def get_sp500list():
+def get_tickers_dict():
     tickers = {}
     try:
         f = open('sp500.txt','r').read()
