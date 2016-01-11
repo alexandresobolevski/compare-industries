@@ -3,7 +3,7 @@ __author__ = 'Alexandre'
 
 import csv, time
 import bubble_chart
-from yahoo import get_tickers_dict, yahoo_key_stats
+from yahoo_api import get_tickers_dict, yahoo_key_stats
 
 
 def wait(seconds):

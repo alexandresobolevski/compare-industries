@@ -40,7 +40,7 @@ def get_source_code(url):
     return urllib2.urlopen(url).read()
 
 
-def yahoo_key_stats(stock):
+def get_key_stats(stock):
     try:
         url = 'http://finance.yahoo.com/q/ks?s=' + stock
         source_code = get_source_code(url)
