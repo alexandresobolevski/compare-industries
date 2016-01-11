@@ -37,18 +37,22 @@ def make_trace(frame, sizes, segments, colors):
     )
 
 
+def wait(seconds):
+    time.sleep(seconds)
+
+
 def get_stats_for(tickers):
     for ticker in tickers.keys():
         print 'getting stats for ', ticker
         try:
             names, stats = yahoo_key_stats(ticker)
-            time.sleep(.2)
+            wait(0.2) # being a good citizen
             for name, stat in zip(names,stats):
                 tickers[ticker][name] = stat
         # keep ticker stats only if all stats are valid
         except Exception, e:
             tickers.pop(ticker, None)
-            print 'failed to save to dict the data', str(e)
+            print 'failed to save to dict ', str(e)
     # example of tickers {'AGN':
     # {'prm': 88.4, 'roa': 1.7, 'name': 'Allergan plc','mc': 121710000000.0}
 
