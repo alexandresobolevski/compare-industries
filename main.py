@@ -2,11 +2,9 @@ __author__ = 'Alexandre'
 
 
 import csv, time
-from yahoo import get_sp500list, yahoo_key_stats
+from yahoo import get_tickers_dict, yahoo_key_stats
 import pandas as pd
-import random
 import plotly.plotly as py
-import plotly.tools as tls
 from plotly import graph_objs as go
 import collections
 
@@ -39,28 +37,35 @@ def make_trace(frame, sizes, segments, colors):
     )
 
 
-def yahoo_populate():
-    tickers = get_sp500list()
-    print tickers
+def get_stats_for(tickers):
     for ticker in tickers.keys():
-        print ticker
+        print 'getting stats for ', ticker
         try:
             names, stats = yahoo_key_stats(ticker)
             time.sleep(.2)
             for name, stat in zip(names,stats):
                 tickers[ticker][name] = stat
+        # keep ticker stats only if all stats are valid
         except Exception, e:
             tickers.pop(ticker, None)
             print 'failed to save to dict the data', str(e)
-    #{'AGN': {'insp': 88.4, 'roa': 1.7, 'name': 'Allergan plc','mc': 121710000000.0}
+    # example of tickers {'AGN':
+    # {'prm': 88.4, 'roa': 1.7, 'name': 'Allergan plc','mc': 121710000000.0}
 
-    print 'writing to file'
-    writer = csv.writer(open('sp500.csv', 'wb'))
+    print 'writing to file...'
+    writer = csv.writer(open(filename, 'wb'))
     writer.writerow(tickers[ticker].keys())
     for ticker in tickers:
         writer.writerow(tickers[ticker].values())
 
-# yahoo_populate()
+
+filename = 'sp500.txt'
+
+tickers = get_tickers_dict(filename)
+
+get_stats_for(tickers)
+
+
 
 py.sign_in('sobolevski.a', '1gd9i51p36')
 
