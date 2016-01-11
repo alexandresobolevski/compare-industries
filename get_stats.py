@@ -67,14 +67,19 @@ def get_stats_for(tickers):
     return tickers
 
 
+def main():
 
-filename = 'sp500.txt'
+    filename = 'sp500.txt'
 
-tickers = get_tickers_dict(filename)
+    tickers = get_tickers_dict(filename)
 
-tickers = get_stats_for(tickers)
+    tickers = get_stats_for(tickers)
 
-write_stats(tickers, filename)
+    write_stats(tickers, filename)
+
+
+if __name__ == "__main__":
+    main()
 
 py.sign_in('sobolevski.a', '1gd9i51p36')
 
