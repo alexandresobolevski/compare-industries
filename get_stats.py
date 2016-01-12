@@ -1,8 +1,10 @@
 __author__ = 'Alexandre'
 
-import csv, time
+import csv
+import time
+
 import bubble_chart
-from yahoo_api import get_key_stats
+from tools.yahoo_api import get_key_stats
 
 
 def wait(seconds):
