@@ -73,7 +73,7 @@ def set_layout(title, x_title, y_title):
     layout = go.Layout(
         title=title,
         width=1000,
-        height=1000,
+        height=700,
         hovermode='closest',
         xaxis=go.XAxis(
             axis_style,
