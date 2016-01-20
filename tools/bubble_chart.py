@@ -21,7 +21,7 @@ def make_trace(frame, sizes, segments, colors):
     sizeref = (sizes.max() / 1e2 ** 2)*4
     return go.Scatter(
         x=X['pb'],
-        y=X['pe'],
+        y=X['peg'],
         name=segments,
         mode='markers',
         marker=go.Marker(
@@ -142,4 +142,4 @@ def bubble_chart(filename):
 
     fig = add_data_source_note(fig)
 
-    py.iplot(fig, filename='test')
+    py.iplot(fig, filename='SP500')
