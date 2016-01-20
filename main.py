@@ -2,7 +2,6 @@ __author__ = 'Alexandre'
 
 import csv
 import time
-
 from tools.bubble_chart import bubble_chart
 from tools.yahoo_api import get_key_stats
 
@@ -54,11 +53,11 @@ def main():
 
     filename = 'sp500'
 
-    # tickers = get_tickers_dict(filename + '.txt')
-    #
-    # tickers = get_stats_for(tickers)
-    #
-    # write_stats(tickers, filename + '.csv')
+    tickers = get_tickers_dict(filename + '.txt')
+
+    tickers = get_stats_for(tickers)
+
+    write_stats(tickers, filename + '.csv')
 
     bubble_chart(filename + '.csv')
 

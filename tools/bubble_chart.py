@@ -11,9 +11,9 @@ def make_text(X):
     print X
     return 'Company: %s\
     <br>Price to book: %s \
-    <br>Price to earnings: %s \
+    <br>Price to earnings growth: %s \
     <br>Market Cap: %s $B'\
-    % (X['name'], X['pb'], X['pe'], X['mc']/1000000000)
+    % (X['name'], X['pb'], X['peg'], X['mc']/1000000000)
 
 
 def make_trace(frame, sizes, segments, colors):
@@ -102,7 +102,8 @@ def hover_over_text(fig, stats, top_sorted):
 def add_data_source_note(fig):
     fig['layout'].update(annotations=go.Annotations([
         go.Annotation(
-            text='Data source: Yahoo Finance (consulted on Jan 10th, 2016)',
+            text='Data source: Yahoo Finance (consulted on Jan 19th, '
+                 '2016)',
             showarrow=False,
             xref='paper',
             yref='paper',
@@ -128,8 +129,8 @@ def bubble_chart(filename):
     top_sorted = get_most_popular('industry', stats, top)
 
     title = "Value Investing Strategy."
-    x_title = "Price/Book"
-    y_title = "Price/Earnings"
+    x_title = "Price / Book Value"
+    y_title = "Price / Earnings Growth"
 
     data = make_plotly_data(stats, top_sorted)
 

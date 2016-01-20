@@ -16,9 +16,9 @@ def get_key_stats(stock):
     try:
         mc = parse_powers(Share(stock).get_market_cap())
         pb = Share(stock).get_price_book()
-        pe = Share(stock).get_price_earnings_ratio()
+        peg = Share(stock).get_price_earnings_growth_ratio()
 
-        return ['mc', 'pb', 'pe' ], [mc, pb, pe]
+        return ['mc', 'pb', 'peg' ], [mc, pb, peg]
 
     except Exception,e :
         print 'failed in yahoo_key_stats for ', stock, ' ', str(e)
