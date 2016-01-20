@@ -10,18 +10,18 @@ from plotly import graph_objs as go
 def make_text(X):
     print X
     return 'Company: %s\
-    <br>Return on Assets: %s %%\
-    <br>Profit Margin: %s %%\
+    <br>Price to book: %s \
+    <br>Price to earnings: %s \
     <br>Market Cap: %s $B'\
-    % (X['name'], X['roa'], X['prm'], X['mc']/1000000000)
+    % (X['name'], X['pb'], X['pe'], X['mc']/1000000000)
 
 
 def make_trace(frame, sizes, segments, colors):
     X = frame.to_dict('list')
     sizeref = (sizes.max() / 1e2 ** 2)*4
     return go.Scatter(
-        x=X['roa'],
-        y=X['prm'],
+        x=X['pb'],
+        y=X['pe'],
         name=segments,
         mode='markers',
         marker=go.Marker(
@@ -47,7 +47,8 @@ def make_plotly_data(stats, top_sorted):
     data = go.Data()
     counter = 0
     colors_array = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728',
-                    '#9467bd']
+                    '#9467bd', '#ffa64d', '#008000', '#663400',
+                    '#00cccc', '#6600cc']
     for industry, X in stats.groupby('industry'):
         if counter > top_sorted: break
         if industry in top_sorted:
@@ -112,23 +113,23 @@ def add_data_source_note(fig):
     return fig
 
 
-def make(filename):
-    with open('credentials.json', 'r') as creds:
+def bubble_chart(filename):
+    with open('tools/plotly_credentials.json', 'r') as creds:
         credentials = json.load(creds)
 
     py.sign_in(credentials['plotly']['username'],
                credentials['plotly']['key'])
-    # plot top 4 industries (selected by market cap), if more,
-    # add colors to colors_array
-    top = 4
+    # plot top industries (selected by market cap), make sure
+    # enough to colors in colors_array of make_plotly_data fun
+    top = 10
 
     stats = pd.read_csv(filename)
 
     top_sorted = get_most_popular('industry', stats, top)
 
-    title = "Comparison of industries' returns and profitability."
-    x_title = "Return on Assets %"
-    y_title = "Profit Margin %"
+    title = "Value Investing Strategy."
+    x_title = "Price/Book"
+    y_title = "Price/Earnings"
 
     data = make_plotly_data(stats, top_sorted)
 

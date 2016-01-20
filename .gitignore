@@ -2,3 +2,4 @@
 rus3000.txt
 sp500.csv
 plotly_credentials.json
+*.pyc
