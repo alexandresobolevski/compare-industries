@@ -1,55 +1,26 @@
 __author__ = 'Alexandre'
 
-import urllib2
+from yahoo_finance import Share
 
 
-def float_or_none(x):
-    try: return float(x)
-    except: return None
-
-
-def get_mc(source_code):
-    mc = source_code.split(
-        'Market Cap (intraday)<font '
-        'size="-1"><sup>5</sup></font>:</td><td '
-        'class="yfnc_tabledata1"><span id="yfs_j10_')[-1].split(
-        '</span>')[0].split('>')[-1]
-    if mc[-1] == 'B':
-        return float_or_none(mc[:-1])*1000000000
-    elif mc[-1] == 'M':
-        return float_or_none(mc[:-1])*1000000
-    else:
-        return 0
-
-
-def get_prm(source_code):
-    prm = source_code.split(
-        'Profit Margin (ttm):</td><td class="yfnc_tabledata1">')[-1].split(
-        '%</td>')[0]
-    return float_or_none(prm)
-
-
-def get_roa(source_code):
-    roa = source_code.split(
-        'Return on Assets (ttm):</td><td class="yfnc_tabledata1">')[-1].split(
-        '%</td>')[0]
-    return float_or_none(roa)
-
-
-def get_source_code(url):
-    return urllib2.urlopen(url).read()
+def parse_powers(x):
+    powers = {'B': 10 ** 9, 'M': 10 ** 6, 'T': 10 ** 12}
+    try:
+        power = x[-1]
+        return float(x[:-1]) * powers[power]
+    except TypeError:
+        return x
 
 
 def get_key_stats(stock):
     try:
-        url = 'http://finance.yahoo.com/q/ks?s=' + stock
-        source_code = get_source_code(url)
+        mc = parse_powers(Share(stock).get_market_cap())
+        pb = Share(stock).get_price_book()
+        pe = Share(stock).get_price_earnings_ratio()
 
-        mc = get_mc(source_code)
-        prm = get_prm(source_code)
-        roa = get_roa(source_code)
-
-        return ['mc', 'prm', 'roa' ], [mc, prm, roa]
+        return ['mc', 'pb', 'pe' ], [mc, pb, pe]
 
     except Exception,e :
-        print 'failed in yahoo_key_stats ', str(e)
+        print 'failed in yahoo_key_stats for ', stock, ' ', str(e)
+
+
