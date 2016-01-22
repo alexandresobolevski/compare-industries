@@ -15,8 +15,7 @@ Uses an available package from github to interface with yahoo/finance
  developed by lukaszbanasiak (https://github
  .com/lukaszbanasiak/yahoo-finance).
 
- See example of result (here)[https://plot.ly/~sobolevski
- .a/45/value-investing-strategy/].
+See example of result (here)[https://plot.ly/~sobolevski.a/45/value-investing-strategy/].
 
 ## Installation
 
@@ -24,9 +23,9 @@ Get an account for [plotly](https://plot.ly). Replace credentials
 .json.example file with your own.
 
 Install yahoo_finance by lukaszbanasiak.
-'''
+```
 pip install yahoo-finance
-'''
+```
 
 ## To use
 
