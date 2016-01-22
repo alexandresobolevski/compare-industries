@@ -29,8 +29,7 @@ pip install yahoo-finance
 
 ## To use
 
-Run get_stats.py. Update sp500.txt or use another file and update
-parameter filename in get_stats.py.
+Run main.py.
 
 If new file instead of sp500.txt, change the variable FILENAME in
 main.py.
