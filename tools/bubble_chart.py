@@ -78,12 +78,12 @@ def set_layout(title, x_title, y_title):
         xaxis=go.XAxis(
             axis_style,
             title=x_title,
-            range=[0, 25]
+            range=[0, 2]
         ),
         yaxis=go.YAxis(
             axis_style,
             title=y_title,
-            range=[-10, 60]
+            range=[0, 2]
         )
     )
     return layout
@@ -128,10 +128,9 @@ def bubble_chart(filename):
 
     top_sorted = get_most_popular('industry', stats, top)
 
-    title = "Value Investing Strategy."
-    x_title = "Price / Book Value"
-    y_title = "Price / Earnings Growth"
-
+    title = "Value Investing Strategy (find companies with pb <1 and peg <1)."
+    x_title = "Price/Book Value"
+    y_title = "Price/Earnings/Growth"
     data = make_plotly_data(stats, top_sorted)
 
     layout = set_layout(title, x_title, y_title)
