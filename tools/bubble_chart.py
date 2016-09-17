@@ -102,8 +102,7 @@ def hover_over_text(fig, stats, top_sorted):
 def add_data_source_note(fig):
     fig['layout'].update(annotations=go.Annotations([
         go.Annotation(
-            text='Data source: Yahoo Finance (consulted on Jan 19th, '
-                 '2016)',
+            text='Data source: Yahoo Finance',
             showarrow=False,
             xref='paper',
             yref='paper',
@@ -114,7 +113,7 @@ def add_data_source_note(fig):
     return fig
 
 
-def bubble_chart(filename):
+def value_investing_investigate(filename):
     with open('tools/plotly_credentials.json', 'r') as creds:
         credentials = json.load(creds)
 
@@ -124,13 +123,14 @@ def bubble_chart(filename):
     # enough to colors in colors_array of make_plotly_data fun
     top = 10
 
-    stats = pd.read_csv(filename)
+    stats = pd.read_csv(filename + '.csv')
 
     top_sorted = get_most_popular('industry', stats, top)
 
     title = "Value Investing Strategy (find companies with pb <1 and peg <1)."
     x_title = "Price/Book Value"
     y_title = "Price/Earnings/Growth"
+
     data = make_plotly_data(stats, top_sorted)
 
     layout = set_layout(title, x_title, y_title)
@@ -141,4 +141,26 @@ def bubble_chart(filename):
 
     fig = add_data_source_note(fig)
 
-    py.iplot(fig, filename='SP500')
+    py.iplot(fig, filename=filename)
+
+
+def value_investing_strategy_check(filename1, filename2):
+    with open('tools/plotly_credentials.json', 'r') as creds:
+        credentials = json.load(creds)
+
+    py.sign_in(credentials['plotly']['username'],
+               credentials['plotly']['key'])
+
+    initial_state = pd.read_csv(filename1 + '.csv')
+    #
+    # pb,industry,peg,name,mc
+    # 1.61,Health Care,2.24,Allergan plc,117460000000.0
+    #
+
+    final_state = pd.read_csv(filename2 + '.csv')
+    #
+    # name,mc,industry,pb,r,peg
+    # Allergan plc,100260000000.0,Health Care,1.4,-0.13221840299542262,1.34
+    #
+
+    py.iplot(fig, filename=('comapre' + filename1 + 'and' + filename2))

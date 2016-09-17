@@ -1,0 +1,2 @@
+AMZN,Amazon.com,Consumer Discretionary
+AAPL,Apple,Information Technology
